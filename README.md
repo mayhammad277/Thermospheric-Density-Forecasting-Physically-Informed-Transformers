@@ -63,16 +63,18 @@ model, scaler, dataset = run_pipeline(
 )
 ```
 ## 📂 Repository Structure
-├── data/               # Placeholders for CHAMP, OMNI, GOES CSVs
-├── models/             # Saved PyTorch weights (.pt files)
-├── notebooks/          # improved_space_weather_pipeline.ipynb
-├── src/                
-│   ├── data_engine.py  # Preprocessing and Temporal Alignment
-│   ├── features.py     # Physics-based feature engineering
-│   ├── transformer.py  # Model architecture
-│   └── orbit_utils.py  # Orekit/NRLMSISE-00 utilities
-└── README.md
-
+thermospheric-density-transformer/
+├── data/                      # 📁 Placeholder for CHAMP, OMNI, GOES CSV files
+├── models/                    # 📁 Saved PyTorch weights (.pt files)
+├── notebooks/
+│   └── improved_space_weather_pipeline.ipynb   # 📓 End-to-end analysis & training
+├── src/
+│   ├── data_engine.py         # 🔧 Preprocessing & temporal alignment of multi-source data
+│   ├── features.py            # 🧪 Physics-based feature engineering (exospheric temp, flux, etc.)
+│   ├── transformer.py         # 🧠 Transformer model architecture
+│   └── orbit_utils.py         # 🛰️ Orekit / NRLMSISE-00 interface utilities
+├── requirements.txt           # 📦 Python dependencies
+└── README.md                  # 📄 Project overview & results
 
 
 ## 📜 Acknowledgments
