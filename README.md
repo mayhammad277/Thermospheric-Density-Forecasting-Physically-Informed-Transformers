@@ -62,6 +62,21 @@ model, scaler, dataset = run_pipeline(
     epochs=100
 )
 ```
+
+
+## Visualisations 
+
+<img width="1600" height="667" alt="Code_Generated_Image" src="https://github.com/user-attachments/assets/0f4b9894-7d14-4cd2-8f0c-42889f92eaee" />
+
+
+
+
+
+
+
+
+
+
 ## 📂 Repository Structure
 ```
 thermospheric-density-transformer/
@@ -77,6 +92,22 @@ thermospheric-density-transformer/
 ├── requirements.txt           # Python dependencies
 └── README.md                  # Project overview & results
 ```               # 📄 Project overview & results
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 📜 Acknowledgments
