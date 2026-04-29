@@ -21,3 +21,59 @@ Key Innovations
 
 
 
+
+📊 Performance Metrics: 
+
+We evaluate model performance using a "Skill Score" relative to the industry-standard 
+| Metric          | Transformer Model | Baseline (MSIS) | Improvement |
+|-----------------|-------------------|-----------------|-------------|
+| RMSE            | 4.12e-12          | 5.88e-12        | 30%         |
+| MAE             | 3.05e-12          | 4.42e-12        | 31%         |
+| Skill Score (SS) | 0.51              | 0.00            | –           |
+
+
+
+Note: The Skill Score is defined as $SS = 1 - \frac{MSE_{model}}{MSE_{baseline}}$. A score of 0.51 indicates that the model captures more than 50% of the variance not captured by empirical models.
+
+
+## 🚀 Getting Started
+Prerequisites
+- Python 3.10+
+
+- Java 8+ (required for Orekit/PyKEP wrappers)
+
+
+## Installation
+
+```bash
+ git clone https://github.com/yourusername/thermospheric-density-transformer.git
+ cd thermospheric-density-transformer
+ pip install -r requirements.txt
+```
+
+## Usage 
+```bash
+from src.pipeline import run_pipeline
+
+# Initialize and train
+model, scaler, dataset = run_pipeline(
+    data_dir='/path/to/csvs',
+    seq_len=24, 
+    epochs=100
+)
+```
+## 📂 Repository Structure
+├── data/               # Placeholders for CHAMP, OMNI, GOES CSVs
+├── models/             # Saved PyTorch weights (.pt files)
+├── notebooks/          # improved_space_weather_pipeline.ipynb
+├── src/                
+│   ├── data_engine.py  # Preprocessing and Temporal Alignment
+│   ├── features.py     # Physics-based feature engineering
+│   ├── transformer.py  # Model architecture
+│   └── orbit_utils.py  # Orekit/NRLMSISE-00 utilities
+└── README.md
+
+
+
+## 📜 Acknowledgments
+Developed for the MIT Space Weather Challenge. Special thanks to the providers of the CHAMP, OMNI, and GOES datasets for enabling high-fidelity heliophysics research.
