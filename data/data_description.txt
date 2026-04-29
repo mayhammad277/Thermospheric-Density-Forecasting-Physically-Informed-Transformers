@@ -1,0 +1,84 @@
+# ==============================================================================
+# DATA DESCRIPTION – Thermospheric Density Transformer
+# ==============================================================================
+# This file describes the CSV datasets required by the pipeline.
+# Place all files inside the "data/" directory.
+# ==============================================================================
+
+1. CHAMP ACCELEROMETER DENSITIES
+   ------------------------------------------------------------------
+   Source:        TU Delft / GFZ CHAMP data (public archives)
+                  or the MIT Challenge dataset if provided.
+   Prefix:        (none) – files are loaded by excluding known prefixes
+                  (see pipeline code).
+   Key columns:   Timestamp              – UTC datetime (parsed automatically)
+                  Orbit Mean Density     – kg/m^3 (target variable)
+                  … other orbital/position columns are optional.
+
+   Notes:
+   • Files may contain additional telemetry (position, velocity, attitude).
+     They are merged on time with other sources.
+   • Missing values in the target column are interpolated and forward/backward
+     filled in the pipeline.
+
+2. OMNI SOLAR WIND & GEOMAGNETIC DATA
+   ------------------------------------------------------------------
+   Source:        NASA OMNIWeb (Hourly / High-Resolution)
+                  https://omniweb.gsfc.nasa.gov/
+   Prefix:        "omni" (case-insensitive) – e.g., omni2_2010.csv, omni_2011.csv
+   Key columns:
+      Timestamp             – UTC datetime
+      Kp_index              – Kp geomagnetic index (3-hourly)
+      Dst_index_nT          – Dst storm index (hourly)
+      f10.7_index           – Solar 10.7 cm flux
+      SW_Plasma_Speed_km_s  – Solar wind speed (km/s)
+      SW_Proton_Density_N_cm3 – Solar wind proton density (N/cm3)
+      BZ_nT_GSM             – IMF Bz component (nT, GSM)
+      BY_nT_GSE             – IMF By (nT, GSE)
+      … other OMNI columns are kept if useful.
+
+   Fill values:
+      -999.9, -999, -9999, -1, 9999.99, 99999.9, 9999999.
+      These are automatically replaced with NaN.
+
+   Notes:
+   • OMNI data is upsampled to 5-min resolution and shifted +45 min to account
+     for solar wind propagation from L1 to Earth’s magnetopause.
+   • The pipeline expects one or more files whose names start with "omni".
+
+3. GOES X-RAY FLUX DATA
+   ------------------------------------------------------------------
+   Source:        NOAA GOES satellite X‑ray sensor archive
+                  https://www.ngdc.noaa.gov/stp/satellite/goes/
+   Prefix:        "goes"
+   Key columns:
+      Timestamp     – UTC datetime
+      xrsa_flux     – X‑ray flux (long wavelength, 1‑8 Å)
+      xrsb_flux     – X‑ray flux (short wavelength, 0.5‑4 Å)
+      (Other GOES columns may exist; flag/quality columns are dropped.)
+
+   Notes:
+   • Resampled to 5‑minute averages and Gaussian-smoothed (σ = 1).
+   • Log‑transformed features (log1p) are added to handle heavy tails.
+   • A +30 min shift is applied to approximate flare‑to‑ionosphere response time.
+
+4. INITIAL STATES / ORBIT ELEMENTS (optional but recommended)
+   ------------------------------------------------------------------
+   Source:        May come with the CHAMP/MIT challenge dataset.
+   Prefix:        "initial_states"
+   Columns:       Timestamp  – UTC datetime
+                  (Optional orbital elements or state vectors.)
+
+   Notes:
+   • These files are merged as‑of nearest time with the main dataset.
+   • If not available, the pipeline still works; just omit them.
+
+5. GENERAL RULES
+   ------------------------------------------------------------------
+   • All files must be CSV with comma separation.
+   • Each file must contain a timestamp column named "Timestamp", "timestamp",
+     "time", or "date". The pipeline auto‑detects and parses it.
+   • Sorting is done automatically on loading.
+   • The "data/" directory can contain subfolders; the loader looks for .csv
+     files in the top‑level only (adjust if needed).
+   • Do not include large binary files or raw orbit files (e.g., .mat) – only CSVs.
