@@ -53,7 +53,7 @@ Prerequisites
 
 ## Usage 
 ```bash
-from src.improved_space_weather_pipeline import run_pipeline
+from src.pipeline import run_pipeline
 
 # Initialize and train
 model, scaler, dataset = run_pipeline(
@@ -71,7 +71,7 @@ thermospheric-density-transformer/
 │   └── improved_space_weather_pipeline.ipynb   # Full pipeline notebook
 ├── src/
 │   ├── data_engine.py         # Preprocessing & temporal alignment
-│   └── improved_space_weather_pipeline.py   # Full pipeline notebook
+│   └── pipeline.py   # Full pipeline notebook
 │   ├── transformer.py         # Transformer model architecture
 │         
 ├── requirements.txt           # Python dependencies
